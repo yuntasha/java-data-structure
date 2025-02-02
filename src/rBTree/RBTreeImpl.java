@@ -211,16 +211,21 @@ public class RBTreeImpl<E> implements RBTree<E>{
 
     @Override
     public boolean remove(E data) {
-
-        return false;
+        var node = nodeFind(data);
+        if (node == null){
+            return false;
+        } else {
+            nodeRemove(node);
+            return true;
+        }
     }
 
     /**
-     *
-     * @param data
-     * @return
+     * 해당 데이터를 가진 노드 조회
+     * @param data 찾을 노드의 데이터
+     * @return 해당 데이터를 가진 노드를 반환 없을 시 null 반한
      */
-    private Node<E> removeCompare(E data){
+    private Node<E> nodeFind(E data){
         Node<E> now = head;
         Node<E> prev = null;
         while (now != null){
@@ -238,6 +243,77 @@ public class RBTreeImpl<E> implements RBTree<E>{
         return null;
     }
 
+    /**
+     * 노드 찾아서 제거 후 로직까지 돌려줌
+     * @param node 삭제할 노드
+     */
+    private void nodeRemove(Node<E> node){
+        if (node.left == null && node.right == null){ // 노드가 끝 부분일 경우
+            if (node.parent.left == node) node.parent.left = null;
+            else node.parent.right = null;
+            // 이중 흑색 노드 처리 null이라 해줘야함
+        } else if(node.left != null && node.right != null){ // 양쪽 자식 노드가 존재하는 경우
+            // 왼쪽에서 가장 큰거 가져와서 매꿈
+            var now = node.left;
+            var prev = node;
+            while (now != null){
+                prev = now;
+                now = now.right;
+            }
+
+            // 기존 연결 제거
+            prev.parent.right = null;
+
+            // 부모와의 연결
+            prev.parent = node.parent;
+            if (node.parent.left == node) node.parent.left = prev;
+            else node.parent.right = prev;
+
+            // 자식과의 연결
+            prev.left = node.left;
+            node.left.parent = prev;
+
+            prev.right = node.right;
+            node.right.parent = prev;
+
+            prev.color = node.color;
+
+            if (prev.color==Color.BLACK){
+                // 이중 블랙 찾아서 해결
+                return;
+            }
+
+        } else { // 한쪽 자식 노드만 존재하는 경우
+            if (node.left != null) { // 왼쪽 자식 노드만 존재하는 경우
+                if (node.parent.left == node) {
+                    node.parent.left = node.left;
+                }
+                else {
+                    node.parent.right = node.left;
+                }
+                node.left.parent = node.parent;
+
+                node.left.color = node.color;
+                node = node.left;
+            } else { // 오른쪽 자식 노드만 존재하는 경우
+                if (node.parent.left == node) {
+                    node.parent.left = node.right;
+                }
+                else {
+                    node.parent.right = node.right;
+                }
+                node.right.parent = node.parent;
+
+                node.right.color = node.color;
+                node = node.right;
+            }
+            if (node.color == Color.BLACK){
+                // 이중 블랙 찾아서 해결
+                return;
+            }
+        }
+    }
+
     @Override
     public E removeFirst() {
         return null;
@@ -250,7 +326,7 @@ public class RBTreeImpl<E> implements RBTree<E>{
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
