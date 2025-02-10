@@ -1,3 +1,4 @@
+import binarySearch.BinarySearch;
 import heap.TestAbstractQueue;
 import heap.TestQueue;
 import kmp.Kmp;
@@ -8,13 +9,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        Kmp kmp = new Kmp("abcabcabc", "abcabcabcabcabcabc");
-        System.out.println(Arrays.toString(kmp.getPi()));
-        System.out.println("kmp.count() = " + kmp.count());
-        System.out.println("kmp.getIdx() = " + kmp.getIdx());
+        int[] arr = IntStream.rangeClosed(0, 10000).toArray();
+        BinarySearch bs = new BinarySearch(arr);
+
+        System.out.println("bs.findIdx(100) = " + bs.findIdx(100));
+        System.out.println("bs.findIdx(i -> i < 100) = " + bs.findIdx(i -> i < 100));
+
+        System.out.println("arr[100] = " + arr[100]);
     }
 
 
