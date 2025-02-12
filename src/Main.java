@@ -1,6 +1,7 @@
 import binarySearch.BinarySearch;
 import heap.TestAbstractQueue;
 import heap.TestQueue;
+import kadane.Kadane;
 import kmp.Kmp;
 import rBTree.RBTree;
 import rBTree.RBTreeImpl;
@@ -9,17 +10,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Random;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int[] arr = IntStream.rangeClosed(0, 10000).toArray();
-        BinarySearch bs = new BinarySearch(arr);
+        int[] arr = new int[10000];
+        Random numGenerate = new Random();
+        for (int i = 0; i < 10000; i++) {
+            arr[i] = numGenerate.nextInt(2001) - 2000; // -1000 ~ 1000 난수 생성
+        }
 
-        System.out.println("bs.findIdx(100) = " + bs.findIdx(100));
-        System.out.println("bs.findIdx(i -> i < 100) = " + bs.findIdx(i -> i < 100));
+        Kadane kadane = new Kadane(arr);
 
-        System.out.println("arr[100] = " + arr[100]);
+
+        System.out.println("getTime(() -> kadane.bruteForce()) = " + getTime(kadane::bruteForce));
+        System.out.println("getTime(kadane::prefixSum) = " + getTime(kadane::prefixSum));
+        System.out.println("getTime(kadane::kadane) = " + getTime(kadane::kadane));
+        System.out.println("getTime(kadane::kadaneNoMemory) = " + getTime(kadane::kadaneNoMemory));
+    }
+
+    private static long getTime(Supplier<Integer> function) {
+        long start = System.currentTimeMillis();
+        function.get();
+        long end = System.currentTimeMillis();
+
+        return end - start;
     }
 
 
