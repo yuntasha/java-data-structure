@@ -1,4 +1,4 @@
-package segmentTree;
+package dataStructure.segmentTree;
 
 public class SegTree {
     long[] nodes;

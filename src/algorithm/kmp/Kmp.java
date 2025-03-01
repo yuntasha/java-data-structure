@@ -1,4 +1,4 @@
-package kmp;
+package algorithm.kmp;
 
 import java.util.ArrayList;
 import java.util.List;

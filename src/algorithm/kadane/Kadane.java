@@ -1,4 +1,4 @@
-package kadane;
+package algorithm.kadane;
 
 public class Kadane {
     private int N;

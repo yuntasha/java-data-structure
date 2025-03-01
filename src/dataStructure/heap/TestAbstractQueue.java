@@ -1,4 +1,4 @@
-package heap;
+package dataStructure.heap;
 
 public abstract class TestAbstractQueue {
     public abstract int testDefault();

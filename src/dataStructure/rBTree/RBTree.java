@@ -1,4 +1,4 @@
-package rBTree;
+package dataStructure.rBTree;
 
 import java.util.List;
 

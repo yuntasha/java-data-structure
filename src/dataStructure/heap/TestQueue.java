@@ -1,4 +1,4 @@
-package heap;
+package dataStructure.heap;
 
 public class TestQueue extends TestAbstractQueue{
     private int privateInt;

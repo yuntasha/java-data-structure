@@ -1,18 +1,12 @@
-import binarySearch.BinarySearch;
-import heap.TestAbstractQueue;
-import heap.TestQueue;
-import kadane.Kadane;
-import kmp.Kmp;
-import rBTree.RBTree;
-import rBTree.RBTreeImpl;
+import dataStructure.heap.TestAbstractQueue;
+import dataStructure.heap.TestQueue;
+import algorithm.kadane.Kadane;
+import dataStructure.rBTree.RBTree;
+import dataStructure.rBTree.RBTreeImpl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -25,10 +19,10 @@ public class Main {
         Kadane kadane = new Kadane(arr);
 
 
-        System.out.println("getTime(() -> kadane.bruteForce()) = " + getTime(kadane::bruteForce));
-        System.out.println("getTime(kadane::prefixSum) = " + getTime(kadane::prefixSum));
-        System.out.println("getTime(kadane::kadane) = " + getTime(kadane::kadane));
-        System.out.println("getTime(kadane::kadaneNoMemory) = " + getTime(kadane::kadaneNoMemory));
+        System.out.println("getTime(() -> algorithm.kadane.bruteForce()) = " + getTime(kadane::bruteForce));
+        System.out.println("getTime(algorithm.kadane::prefixSum) = " + getTime(kadane::prefixSum));
+        System.out.println("getTime(algorithm.kadane::algorithm.kadane) = " + getTime(kadane::kadane));
+        System.out.println("getTime(algorithm.kadane::kadaneNoMemory) = " + getTime(kadane::kadaneNoMemory));
     }
 
     private static long getTime(Supplier<Integer> function) {

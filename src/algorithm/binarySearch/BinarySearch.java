@@ -1,4 +1,4 @@
-package binarySearch;
+package algorithm.binarySearch;
 
 import java.util.function.Predicate;
 

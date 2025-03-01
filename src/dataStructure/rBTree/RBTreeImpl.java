@@ -1,4 +1,4 @@
-package rBTree;
+package dataStructure.rBTree;
 
 import java.util.ArrayList;
 import java.util.Comparator;
