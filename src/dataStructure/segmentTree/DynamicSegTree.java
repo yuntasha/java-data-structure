@@ -1,4 +1,4 @@
-package segmentTree;
+package dataStructure.segmentTree;
 
 import java.util.*;
 
