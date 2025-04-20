@@ -1,3 +1,4 @@
+import algorithm.sort.*;
 import dataStructure.heap.TestAbstractQueue;
 import dataStructure.heap.TestQueue;
 import algorithm.kadane.Kadane;
@@ -5,6 +6,9 @@ import dataStructure.rBTree.RBTree;
 import dataStructure.rBTree.RBTreeImpl;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -13,16 +17,36 @@ public class Main {
         int[] arr = new int[10000];
         Random numGenerate = new Random();
         for (int i = 0; i < 10000; i++) {
-            arr[i] = numGenerate.nextInt(2001) - 2000; // -1000 ~ 1000 난수 생성
+            arr[i] = numGenerate.nextInt(9000) + 1000; // -1000 ~ 1000 난수 생성
         }
 
-        Kadane kadane = new Kadane(arr);
+        List<Sort> sortList = List.of(new BubbleSort(), new InsertionSort(), new SelectionSort(), new MergeSort(), new QuickSort(), new RadixSort());
+        List<String> nameList = List.of("BubbleSort", "InsertionSort", "SelectionSort", "MergeSort", "QuickSort", "RadixSort");
 
+        HashMap<String, Long> time = new HashMap<>();
 
-        System.out.println("getTime(() -> algorithm.kadane.bruteForce()) = " + getTime(kadane::bruteForce));
-        System.out.println("getTime(algorithm.kadane::prefixSum) = " + getTime(kadane::prefixSum));
-        System.out.println("getTime(algorithm.kadane::algorithm.kadane) = " + getTime(kadane::kadane));
-        System.out.println("getTime(algorithm.kadane::kadaneNoMemory) = " + getTime(kadane::kadaneNoMemory));
+        for (String name : nameList) {
+            time.put(name, 0L);
+        }
+
+        System.out.println("Before arr");
+        System.out.println(Arrays.toString(arr));
+        for (int t = 0; t < 10; t++) {
+            for (int i = 0; i < 6; i++) {
+                int[] temp = new int[10000];
+                System.arraycopy(arr, 0, temp, 0, 10000);
+
+                long start = System.currentTimeMillis();
+                sortList.get(i).sort(temp);
+                long end = System.currentTimeMillis();
+
+                time.put(nameList.get(i), time.get(nameList.get(i)) + end - start);
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            System.out.println(nameList.get(i) + " : " + (time.get(nameList.get(i))));
+        }
     }
 
     private static long getTime(Supplier<Integer> function) {
